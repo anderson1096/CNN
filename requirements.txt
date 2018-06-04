@@ -1,0 +1,7 @@
+imutils==0.4.6
+opencv_python==3.4.1.15
+torchvision==0.2.1
+matplotlib==2.2.2
+numpy==1.14.3
+torch==0.4.0
+Pillow==5.1.0
