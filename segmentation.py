@@ -40,26 +40,26 @@ def roi_center(roi):
 	return roi_trans
 
 
-'''if __name__ == "__main__":
-	#image_src = cv2.imread("./Placas/placa4.jpg")
-	#image_src = imutils.resize(image_src, height=500)
-	#result = digit_segmentation(image_src)
-	#result_sort = sorted(result.items(), key=operator.itemgetter(0))
-	#final_result = []
+if __name__ == "__main__":
+	image_src = cv2.imread("./Placas/placa.jpg")
+	image_src = imutils.resize(image_src, height=500)
+	result = digit_segmentation(image_src)
+	result_sort = sorted(result.items(), key=operator.itemgetter(0))
+	final_result = []
 	
 	for r in result_sort:
-		print r[0]
+		#print r[0]
 		final_result.append(r[1])
 
 
 	
-	for r in final_result:
+	#for r in final_result:
 		#r = cv2.resize(r, (32, 32), interpolation = cv2.INTER_CUBIC)
-		cv2.imshow("Inicial", r)
+	#	cv2.imshow("Inicial", r)
 		
-		cv2.waitKey(0)
+	#	cv2.waitKey(0)
 
-	#save_digits(final_result)
+	save_digits(final_result)
 	#cv2.imshow("Inicial", image_src)
 	#cv2.waitKey(0)
-	#cv2.destroyAllWindows()'''
+	#cv2.destroyAllWindows()
