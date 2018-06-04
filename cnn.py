@@ -11,6 +11,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import time
 
+
 idx = ['0','1','2','3','4','5','6','7','8','9',
        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
@@ -19,11 +20,8 @@ def pil_loader(path):
 		img = Image.open(f)
 		return img.convert('L')
 
-trans = transforms.Compose([transforms.Resize((32,32)), transforms.ToTensor()])
-mydata = dset.ImageFolder('./char74k',transform=trans, loader=pil_loader)
-loader = torch.utils.data.DataLoader(mydata, batch_size=128, shuffle=True, num_workers=2)
-print (mydata.classes)
-print (idx)
+
+
 class Net(nn.Module):
 	def __init__(self):
 		super(Net, self).__init__()
@@ -45,10 +43,9 @@ class Net(nn.Module):
 		x = self.fc5(x)
 		return x
 
-model = Net()
-optimizer = optim.Adam(model.parameters(), lr=1e-4, eps=1e-4)
 
-def train(epoch):
+
+def train(epoch, model):
 	model.train()
 	for batch_idx, (data, target) in enumerate(loader):
 		data, target = Variable(data), Variable(target)
@@ -63,14 +60,9 @@ def train(epoch):
                  epoch, batch_idx * len(data), len(loader.dataset),
                  100. * batch_idx / len(loader), output.data.item()))
 
-'''for epoch in range(5):
-	train(epoch)'''
 
-model = Net()
-model.load_state_dict(torch.load("char_recognizer.pt"))
-print (model)
 
-def predict_char(gray):
+def predict_char(gray, model):
     w = gray.size[0]
     h = gray.size[1]
     gray = gray.convert('L')
@@ -84,20 +76,33 @@ def predict_char(gray):
     canvas = np.array(canvas)
     #canvas = canvas / 255.0
     
-    plt.imshow(canvas)
-    plt.show()
-
     #test_data = np.array(gray)
     test_output = model(Variable(torch.FloatTensor(canvas).unsqueeze(0).unsqueeze(0).data))
-    print (test_output.data.max(1, keepdim=True))
+    #print (test_output.data.max(1, keepdim=True))
     pred = test_output.data.max(1, keepdim=True)[1] 
     pred = np.array(pred).squeeze(0).squeeze(0)
-    print(idx[pred])
+    #print('El caracter es =>', idx[pred])
+    #plt.imshow(canvas)
+    #plt.show()
+    return idx[pred]
 
+'''if __name__ == "__main__":
+	#trans = transforms.Compose([transforms.Resize((32,32)), transforms.ToTensor()])
+	#mydata = dset.ImageFolder('./char74k',transform=trans, loader=pil_loader)
+	#loader = torch.utils.data.DataLoader(mydata, batch_size=128, shuffle=True, num_workers=2)
+	
+	#model = Net()
+	#optimizer = optim.Adam(model.parameters(), lr=1e-4, eps=1e-4)
+	for epoch in range(5):
+	train(epoch)
 
-pil_im = Image.open("./test3.jpg")
+	model = Net()
+	model.load_state_dict(torch.load("char_recognizer.pt"))
+	res = ""
+	for i in range(6):
+		pil_im = Image.open("./Test/test{}.jpg".format(i))
+		res += predict_char(pil_im)
+	print ('La placa es:  ', res)
 
-predict_char(pil_im)
-
-#torch.save(model.state_dict(), 'char_recognizer.pt')
-
+	#torch.save(model.state_dict(), 'char_recognizer.pt')
+'''
