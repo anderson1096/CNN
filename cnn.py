@@ -8,7 +8,7 @@ import numpy as np
 from PIL import ImageOps
 import torch.optim as optim
 from PIL import Image
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import time
 
 
@@ -48,6 +48,7 @@ class Net(nn.Module):
 def train(epoch, model, optimizer, loader):
 	model.train()
 	for batch_idx, (data, target) in enumerate(loader):
+		data, target = data.cuda(), target.cuda() 
 		data, target = Variable(data), Variable(target)
 		optimizer.zero_grad()
 		output = model(data)
@@ -77,7 +78,7 @@ def predict_char(gray, model):
     #canvas = canvas / 255.0
     
     #test_data = np.array(gray)
-    test_output = model(Variable(torch.FloatTensor(canvas).unsqueeze(0).unsqueeze(0).data))
+    test_output = model(Variable(torch.FloatTensor(canvas).unsqueeze(0).unsqueeze(0).cuda()))
     #print (test_output.data.max(1, keepdim=True))
     pred = test_output.data.max(1, keepdim=True)[1] 
     pred = np.array(pred).squeeze(0).squeeze(0)
