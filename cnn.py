@@ -45,7 +45,7 @@ class Net(nn.Module):
 
 
 
-def train(epoch, model):
+def train(epoch, model, optimizer, loader):
 	model.train()
 	for batch_idx, (data, target) in enumerate(loader):
 		data, target = Variable(data), Variable(target)

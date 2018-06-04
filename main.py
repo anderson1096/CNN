@@ -17,9 +17,10 @@ if __name__ == "__main__":
 	final_result = []
 	segmentation.save_digits(final_result)
 
-	#CNN
+	#CNN	
 	model = cnn.Net()
 	model.load_state_dict(torch.load("char_recognizer.pt"))
+
 
 	res = ""
 	for i in range(6):
