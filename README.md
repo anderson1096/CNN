@@ -11,4 +11,8 @@ El presente sistema es una herramienta que permite realizar reconocimiento ópti
 **NOTA:** Para su intalación se recomienda usar entornos virtuales.
 ```bash
 pip install -r requirements.txt
+```
 
+### Ejecucion
+* El sistema se puede ejecutar a través de SLURM
+* También puede ser ejecutado con python ``` python train.py ``` (para Entrenamiento) o ``` python main.py ``` en Inferencia.
