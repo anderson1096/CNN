@@ -8,7 +8,7 @@ El presente sistema es una herramienta que permite realizar reconocimiento ópti
 
 ### Instalación
 
-**NOTA:** Para su intalación se recomienda usar entorno virtuales
+**NOTA:** Para su intalación se recomienda usar entornos virtuales.
 ```bash
 pip install -r requirements.txt
 
